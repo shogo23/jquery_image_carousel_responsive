@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Image Carousel</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #carousel {
+      margin: 50px auto;
+      width: 90%;
+      box-shadow: 0px 0px 5px black;
+      overflow: hidden;
+    }
+
+    #carousel ul li {
+      height: 500px;
+      list-style: none;
+      float: left;
+      background-position: center;
+      background-repeat: none;
+      background-size: cover;
+    }
+  </style>
+  <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+
+      //animation motion size default val.
+      var motion = 0;
+
+      //animation interval time.
+      var interval = 4000;
+
+      //Execute animation.
+      window.t = setTimeout(image_carousel_animation, interval);
+
+      //Run image carousel when window is onfocus.
+      window.onfocus = function () {
+        t = setTimeout(image_carousel_animation, interval);
+      };
+
+      //Stop image carousel when window is onblur.
+      window.onblur = function () {
+        clearTimeout(t);
+      };
+
+      $("#carousel ul li:nth-child(1)").css({
+        "background-image": "url(1.jpg)"
+      });
+
+      $("#carousel ul li:nth-child(2)").css({
+        "background-image": "url(2.jpg)"
+      });
+
+      $("#carousel ul li:nth-child(3)").css({
+        "background-image": "url(3.jpg)"
+      });
+
+      $("#carousel ul li:nth-child(4)").css({
+        "background-image": "url(4.jpg)"
+      });
+
+      $("#carousel ul li:nth-child(5)").css({
+        "background-image": "url(5.jpg)"
+      });
+
+      $("#carousel ul li:nth-child(6)").css({
+        "background-image": "url(6.jpg)"
+      });
+
+      $("#carousel ul li:nth-child(7)").css({
+        "background-image": "url(7.jpg)"
+      });
+
+      $("#carousel ul li:nth-child(8)").css({
+        "background-image": "url(8.jpg)"
+      });
+
+      $("#carousel ul li:nth-child(9)").css({
+        "background-image": "url(9.jpg)"
+      });
+
+      //Call carousel_vars
+      carousel_vars();
+
+      //If window is resize.
+      $(window).resize(function() {
+        //Call carousel_vars
+        carousel_vars();
+      });
+
+      function carousel_vars() {
+        //#carousel width.
+        var carousel_width = $("#carousel").width();
+
+        //#carousel height.
+        var carousel_height = $(window).height() - 100;
+
+        //li count.
+        var li_count = $("#carousel ul li").length + 1;
+
+        //ul size.
+        var ul_size = carousel_width * li_count;
+
+        //set ul size.
+        $("#carousel ul").css({
+          "width": ul_size + "px",
+          "height": carousel_height + "px"
+        });
+
+        //set li size.
+        $("#carousel ul li").css({
+          "width": carousel_width + "px",
+          "height": carousel_height + "px"
+        });
+
+        //Set motion size.
+        motion = carousel_width;
+      }
+
+      //Carousel animation.
+      function image_carousel_animation() {
+
+        //clear timeout.
+        clearTimeout(t);
+
+        carousel_playsound();
+
+        //Animate carousel.
+        $("#carousel ul").animate({
+          marginLeft: "-" + motion + "px"
+        }, 800, function() {
+          $("#carousel ul li:last").after($("#carousel ul li:first"));
+          $(this).css("margin-left", 0);
+
+          //setTimeout carousel.
+          t = setTimeout(image_carousel_animation, interval);
+        });
+      }
+
+      function carousel_playsound() {
+        var carousel_audio = document.getElementById("carousel_audio");
+        carousel_audio.play();
+      }
+    });
+  </script>
+</head>
+<body>
+  <audio id="carousel_audio" src="button-17.mp3" autostart="false" ></audio>
+  <div id="carousel">
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+</html>
